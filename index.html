@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NGUYEN VAN TUAN KHANH — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+/* ─── RESET ─────────────────────────────── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --navy:   #08101f;
+  --blue:   #4f8bff;
+  --purple: #7c3aed;
+  --cyan:   #06b6d4;
+  --green:  #10b981;
+  --white:  #ffffff;
+  --gray:   #94a3b8;
+}
+html, body { height:100%; font-family:'Inter','Noto Sans JP',sans-serif; }
+body { background:var(--navy); color:var(--white); overflow:hidden; height:100vh; }
+a { color:inherit; text-decoration:none; }
+img { display:block; max-width:100%; }
+button { font-family:inherit; cursor:pointer; }
+
+/* ─── COVER TRANSITION ────────────────────── */
+#cover { position:fixed; inset:0; z-index:9000; pointer-events:none; }
+#cover-panel {
+  position:absolute; inset:0;
+  transform:translateY(102%);
+  will-change:transform;
+  transition:transform 0.72s cubic-bezier(0.76,0,0.24,1);
+}
+#cover.phase-in  #cover-panel { transform:translateY(0); }
+
+/* ─── APP / SECTIONS ──────────────────────── */
+#app { position:relative; width:100vw; height:100vh; }
+.section { position:absolute; inset:0; opacity:0; visibility:hidden; overflow:hidden; }
+.section.active { opacity:1; visibility:visible; }
+
+/* ─── TOP BAR ─────────────────────────────── */
+.top-bar {
+  position:fixed; top:0; left:0; right:0; z-index:800;
+  padding:18px 40px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.logo { font-size:12px; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; opacity:0.75; }
+.btn-print {
+  display:flex; align-items:center; gap:7px;
+  background:rgba(255,255,255,0.1); backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.2); color:white;
+  padding:8px 18px; border-radius:100px;
+  font-size:11px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase;
+  transition:all 0.3s;
+}
+.btn-print:hover { background:rgba(255,255,255,0.2); transform:translateY(-1px); }
+.btn-print svg { width:13px; height:13px; }
+
+/* ─── SIDE DOTS ──────────────────────────── */
+.side-nav {
+  position:fixed; right:24px; top:50%;
+  transform:translateY(-50%); z-index:800;
+  display:flex; flex-direction:column; gap:10px;
+}
+.dot {
+  width:6px; height:6px; border-radius:50%;
+  background:rgba(255,255,255,0.2);
+  border:1px solid rgba(255,255,255,0.35);
+  cursor:pointer;
+  transition:all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+}
+.dot:hover { background:rgba(255,255,255,0.55); }
+.dot.active { background:white; transform:scale(1.8); border-color:white; }
+
+/* ─── BOTTOM ARROW ───────────────────────── */
+.arrow-down {
+  position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
+  z-index:800; background:none; border:none; color:white; opacity:0.45;
+  display:flex; flex-direction:column; align-items:center; gap:3px;
+  animation:bounce 2.2s ease-in-out infinite;
+  transition:opacity 0.3s;
+}
+.arrow-down:hover { opacity:0.9; cursor:pointer; }
+.arrow-down span { font-size:9px; letter-spacing:0.15em; text-transform:uppercase; }
+.arrow-down.hidden { opacity:0; pointer-events:none; }
+@keyframes bounce {
+  0%,100%{ transform:translateX(-50%) translateY(0); }
+  50%{ transform:translateX(-50%) translateY(7px); }
+}
+
+/* ─── SECTION COUNTER ────────────────────── */
+.section-label {
+  position:fixed; left:40px; bottom:26px; z-index:800;
+  font-size:10px; letter-spacing:0.18em; text-transform:uppercase;
+  color:rgba(255,255,255,0.3); font-weight:500;
+}
+
+/* ════════════════════════════════════════════
+   S0 — HERO
+════════════════════════════════════════════ */
+#s0 { background:var(--navy); display:flex; align-items:center; justify-content:center; }
+#canvas-bg { position:absolute; inset:0; z-index:0; }
+
+.hero-wrap {
+  position:relative; z-index:2;
+  display:grid; grid-template-columns:1fr 320px; gap:64px;
+  align-items:center; max-width:960px; width:100%; padding:0 40px;
+}
+.hero-subtitle {
+  font-size:12px; font-weight:600; letter-spacing:0.18em;
+  text-transform:uppercase; color:var(--gray); margin-bottom:14px;
+}
+.hero-text h1 {
+  font-size:clamp(34px,4.5vw,58px); font-weight:900;
+  line-height:1.06; letter-spacing:-0.02em; margin-bottom:16px;
+}
+.hero-text h1 span { color:var(--blue); }
+.hero-tagline {
+  font-size:14px; color:rgba(255,255,255,0.6); line-height:1.8;
+  max-width:400px; margin-bottom:28px;
+  font-family:'Noto Sans JP',sans-serif;
+}
+.hero-contacts { display:flex; flex-direction:column; gap:7px; margin-bottom:28px; }
+.contact-item {
+  display:flex; align-items:center; gap:9px;
+  font-size:12.5px; color:var(--gray); transition:color 0.2s;
+}
+.contact-item:hover { color:white; }
+.contact-item svg { width:13px; height:13px; flex-shrink:0; color:var(--blue); }
+.hero-tags { display:flex; flex-wrap:wrap; gap:7px; }
+.tag {
+  padding:4px 12px; border-radius:100px;
+  border:1px solid rgba(255,255,255,0.13);
+  font-size:11px; font-weight:500;
+  color:rgba(255,255,255,0.65);
+  background:rgba(255,255,255,0.04);
+}
+.hero-card { position:relative; animation:float 5s ease-in-out infinite; }
+@keyframes float {
+  0%,100%{ transform:translateY(0) rotate(-2deg); }
+  50%{ transform:translateY(-14px) rotate(-1deg); }
+}
+.hero-card img {
+  width:100%; border-radius:14px;
+  box-shadow:0 32px 80px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,255,255,0.06);
+}
+.hero-card::before {
+  content:''; position:absolute; inset:-1px; border-radius:14px;
+  background:linear-gradient(135deg,rgba(79,139,255,0.28),transparent 60%);
+  z-index:-1;
+}
+
+/* ════════════════════════════════════════════
+   S1 — MY STORY
+════════════════════════════════════════════ */
+#s1 { background:#f8fafc; color:#0f172a; }
+.story-wrap { display:grid; grid-template-columns:1fr 1fr; height:100%; }
+.story-img { position:relative; overflow:hidden; }
+.story-img img { width:100%; height:100%; object-fit:cover; }
+.story-img::after {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(to right, transparent 55%, #f8fafc);
+}
+.story-content {
+  display:flex; flex-direction:column; justify-content:center;
+  padding:80px 56px 80px 32px; overflow-y:auto;
+}
+.story-tag {
+  display:inline-flex; align-items:center; gap:6px;
+  font-size:10px; font-weight:700; letter-spacing:0.18em;
+  text-transform:uppercase; color:var(--blue); margin-bottom:16px;
+}
+.story-tag::before { content:''; width:22px; height:2px; background:var(--blue); }
+.story-content h2 {
+  font-size:30px; font-weight:800; line-height:1.2; margin-bottom:22px; color:#0f172a;
+  font-family:'Noto Sans JP',sans-serif;
+}
+.story-block { margin-bottom:16px; }
+.story-block p {
+  font-size:13.5px; line-height:1.9; color:#475569;
+  font-family:'Noto Sans JP',sans-serif;
+}
+.story-block strong { color:#0f172a; font-weight:600; }
+.story-highlight {
+  background:#eff6ff; border-left:3px solid var(--blue);
+  padding:13px 16px; border-radius:0 8px 8px 0;
+  font-size:13px; color:#1e40af; line-height:1.75;
+  font-family:'Noto Sans JP',sans-serif; margin-top:18px;
+}
+
+/* ════════════════════════════════════════════
+   PROJECT SHOWCASE PAGES (S2, S3, S4)
+════════════════════════════════════════════ */
+.proj-page {
+  height:100%; display:grid; grid-template-columns:55% 45%;
+}
+
+/* — Visual side — */
+.proj-visual {
+  position:relative; overflow:hidden;
+  display:flex; flex-direction:column;
+  background:#040b14;
+}
+.proj-main-img {
+  flex:1; position:relative; overflow:hidden; cursor:pointer;
+}
+.proj-main-img img {
+  width:100%; height:100%; object-fit:cover; object-position:top;
+  transition:transform 0.6s ease;
+}
+.proj-main-img:hover img { transform:scale(1.03); }
+.proj-main-overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(to bottom, transparent 50%, rgba(4,11,20,0.7));
+}
+
+/* thumbnails strip */
+.proj-thumbs {
+  display:flex; gap:8px; padding:10px 14px;
+  background:rgba(0,0,0,0.45); flex-shrink:0;
+}
+.proj-thumb-btn {
+  flex-shrink:0; width:76px; height:50px;
+  border-radius:7px; overflow:hidden;
+  border:2px solid transparent; cursor:pointer;
+  transition:border-color 0.25s, opacity 0.25s;
+  opacity:0.55; background:none; padding:0;
+}
+.proj-thumb-btn img { width:100%; height:100%; object-fit:cover; object-position:top; }
+.proj-thumb-btn.active { border-color:var(--blue); opacity:1; }
+.proj-thumb-btn:hover { opacity:0.85; }
+
+/* — Info side — */
+.proj-info {
+  display:flex; flex-direction:column; justify-content:center;
+  padding:56px 48px; overflow-y:auto;
+}
+.proj-num {
+  font-size:72px; font-weight:900; letter-spacing:-0.04em;
+  color:rgba(255,255,255,0.04); line-height:1;
+  margin-bottom:-8px; user-select:none;
+}
+.proj-cat {
+  font-size:10px; font-weight:700; letter-spacing:0.2em;
+  text-transform:uppercase; margin-bottom:8px;
+}
+.proj-info h2 {
+  font-size:26px; font-weight:800; line-height:1.25;
+  margin-bottom:6px; font-family:'Noto Sans JP',sans-serif;
+}
+.proj-info .proj-year {
+  font-size:11px; color:rgba(255,255,255,0.4); margin-bottom:20px;
+  font-weight:500;
+}
+.proj-desc {
+  margin-bottom:18px; flex:1;
+  max-height:calc(100vh - 340px); overflow-y:auto;
+  padding-right:4px;
+}
+.proj-desc::-webkit-scrollbar { width:3px; }
+.proj-desc::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.12); border-radius:2px; }
+.proj-desc p {
+  font-size:13px; line-height:1.9; color:rgba(255,255,255,0.62);
+  font-family:'Noto Sans JP',sans-serif; margin-bottom:12px;
+}
+.proj-desc p:last-child { margin-bottom:0; }
+.proj-desc strong { color:rgba(255,255,255,0.88); font-weight:600; }
+
+.proj-tech-row { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:20px; }
+.proj-pill {
+  padding:4px 11px; border-radius:100px;
+  font-size:10px; font-weight:600; letter-spacing:0.04em;
+}
+
+/* QR row */
+.proj-qr-row {
+  display:flex; align-items:center; gap:14px;
+  padding:14px 16px; border-radius:12px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.07);
+  flex-shrink:0;
+}
+.qr-box {
+  background:white; padding:6px; border-radius:8px;
+  width:68px; height:68px; flex-shrink:0;
+}
+.qr-box img { width:100%; height:100%; object-fit:cover; }
+.qr-text h5 { font-size:12px; font-weight:700; margin-bottom:3px; }
+.qr-text p { font-size:11px; color:rgba(255,255,255,0.45); line-height:1.5; }
+
+/* per-project accent colors */
+#s1 .proj-page { background:#08111f; }
+#s1 .proj-cat  { color:#4f8bff; }
+#s1 .proj-pill { background:rgba(79,139,255,0.1); border:1px solid rgba(79,139,255,0.25); color:#7eb3ff; }
+
+#s2 .proj-page { background:#091218; }
+#s2 .proj-cat  { color:#06b6d4; }
+#s2 .proj-pill { background:rgba(6,182,212,0.1); border:1px solid rgba(6,182,212,0.25); color:#67e8f9; }
+
+#s3 .proj-page { background:#0f060c; }
+#s3 .proj-cat  { color:#f43f5e; }
+#s3 .proj-pill { background:rgba(244,63,94,0.1); border:1px solid rgba(244,63,94,0.3); color:#fb7185; }
+
+#s4 .proj-page { background:#110e04; }
+#s4 .proj-cat  { color:#f59e0b; }
+#s4 .proj-pill { background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.3); color:#fbbf24; }
+
+#s5 .proj-page { background:#0d0a20; }
+#s5 .proj-cat  { color:#a78bfa; }
+#s5 .proj-pill { background:rgba(167,139,250,0.1); border:1px solid rgba(167,139,250,0.25); color:#c4b5fd; }
+
+/* ════════════════════════════════════════════
+   S5 — CAREER VISION
+════════════════════════════════════════════ */
+#s5 {
+  background:linear-gradient(135deg,#09031e 0%,#130828 45%,#0c1832 100%);
+  display:flex; align-items:center; justify-content:center;
+}
+.career-wrap {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:60px; max-width:1040px; width:100%; padding:0 40px; align-items:center;
+}
+.career-img-col { position:relative; }
+.career-img-col img { width:100%; border-radius:18px; box-shadow:0 40px 80px rgba(0,0,0,0.55); }
+.career-glow {
+  position:absolute; width:320px; height:320px; border-radius:50%;
+  background:radial-gradient(circle,rgba(124,58,237,0.28) 0%,transparent 70%);
+  top:50%; left:50%; transform:translate(-50%,-50%); pointer-events:none;
+}
+.career-content .eyebrow {
+  font-size:10px; font-weight:700; letter-spacing:0.22em;
+  text-transform:uppercase; color:#a78bfa; margin-bottom:12px;
+}
+.career-content h2 {
+  font-size:32px; font-weight:800; line-height:1.15; margin-bottom:26px;
+  background:linear-gradient(135deg,#fff 30%,#a78bfa);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.career-items { display:flex; flex-direction:column; gap:14px; }
+.career-item {
+  display:flex; gap:14px; align-items:flex-start;
+  padding:14px 16px;
+  background:rgba(255,255,255,0.035);
+  border:1px solid rgba(167,139,250,0.13); border-radius:12px;
+  transition:border-color 0.3s, background 0.3s;
+}
+.career-item:hover { border-color:rgba(167,139,250,0.38); background:rgba(167,139,250,0.07); }
+.career-icon {
+  width:34px; height:34px; border-radius:9px;
+  background:linear-gradient(135deg,#7c3aed,#4f8bff);
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; font-size:15px;
+}
+.career-item-text h4 { font-size:13px; font-weight:700; margin-bottom:3px; }
+.career-item-text p {
+  font-size:12px; color:rgba(255,255,255,0.5); line-height:1.65;
+  font-family:'Noto Sans JP',sans-serif;
+}
+
+/* ════════════════════════════════════════════
+   S6 — SKILLS
+════════════════════════════════════════════ */
+#s6 { background:#f8fafc; color:#0f172a; display:flex; align-items:center; justify-content:center; }
+.skills-wrap { max-width:960px; width:100%; padding:0 40px; }
+.section-header { text-align:center; margin-bottom:36px; }
+.section-header .eyebrow {
+  font-size:10px; font-weight:700; letter-spacing:0.22em;
+  text-transform:uppercase; color:var(--blue); margin-bottom:8px;
+}
+.section-header h2 { font-size:32px; font-weight:800; color:#0f172a; }
+
+.skills-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:14px; }
+.skill-group {
+  background:white; border:1px solid #e2e8f0; border-radius:14px; padding:18px;
+  transition:box-shadow 0.3s, transform 0.3s;
+}
+.skill-group:hover { box-shadow:0 10px 28px rgba(0,0,0,0.07); transform:translateY(-3px); }
+.skill-group h4 {
+  font-size:10px; font-weight:700; letter-spacing:0.12em;
+  text-transform:uppercase; color:var(--blue); margin-bottom:12px;
+}
+.skill-list { display:flex; flex-direction:column; gap:9px; }
+.skill-row { display:flex; align-items:center; gap:8px; }
+.skill-icon { font-size:15px; width:22px; text-align:center; }
+.skill-name { font-size:12px; font-weight:500; color:#1e293b; flex:1; }
+.skill-bar-bg { height:3px; background:#e2e8f0; border-radius:2px; flex:1; }
+.skill-bar { height:3px; border-radius:2px; background:linear-gradient(90deg,var(--blue),var(--purple)); }
+
+.skills-extra { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.lang-card, .cert-card {
+  background:white; border:1px solid #e2e8f0; border-radius:14px; padding:18px;
+}
+.lang-card h4, .cert-card h4 {
+  font-size:10px; font-weight:700; letter-spacing:0.12em;
+  text-transform:uppercase; color:var(--purple); margin-bottom:12px;
+}
+.lang-items { display:flex; flex-direction:column; gap:9px; }
+.lang-item { display:flex; justify-content:space-between; align-items:center; }
+.lang-item span { font-size:13px; color:#1e293b; font-weight:500; }
+.lang-level {
+  font-size:10px; padding:3px 10px; border-radius:100px;
+  background:#eff6ff; color:var(--blue); font-weight:600;
+}
+.cert-list { display:flex; flex-direction:column; gap:7px; }
+.cert-row {
+  display:flex; align-items:center; gap:8px;
+  font-size:12.5px; color:#334155; font-family:'Noto Sans JP',sans-serif;
+}
+.cert-dot { width:5px; height:5px; border-radius:50%; background:var(--green); flex-shrink:0; }
+
+/* ════════════════════════════════════════════
+   S7 — CONTACT / PRINT
+════════════════════════════════════════════ */
+#s6 { background:var(--navy); display:flex; align-items:center; justify-content:center; }
+.contact-wrap {
+  max-width:880px; width:100%; padding:0 40px;
+  display:grid; grid-template-columns:1fr 240px; gap:60px; align-items:center;
+}
+.contact-left .eyebrow {
+  font-size:10px; font-weight:700; letter-spacing:0.22em;
+  text-transform:uppercase; color:var(--cyan); margin-bottom:12px;
+}
+.contact-left h2 { font-size:38px; font-weight:800; line-height:1.1; margin-bottom:14px; }
+.contact-left h2 em { font-style:normal; color:var(--cyan); }
+.contact-left > p {
+  font-size:13.5px; color:rgba(255,255,255,0.55); line-height:1.85;
+  max-width:370px; font-family:'Noto Sans JP',sans-serif; margin-bottom:28px;
+}
+.contact-links { display:flex; flex-direction:column; gap:10px; margin-bottom:28px; }
+.contact-link {
+  display:flex; align-items:center; gap:12px;
+  padding:13px 16px;
+  background:rgba(255,255,255,0.035); border:1px solid rgba(255,255,255,0.07);
+  border-radius:11px; transition:all 0.3s; text-decoration:none; color:white;
+}
+.contact-link:hover {
+  background:rgba(6,182,212,0.09); border-color:rgba(6,182,212,0.28);
+  transform:translateX(4px);
+}
+.contact-link svg { width:16px; height:16px; color:var(--cyan); flex-shrink:0; }
+.cl-label { font-size:10px; color:var(--gray); font-weight:500; letter-spacing:0.05em; }
+.cl-value { font-size:13px; font-weight:600; }
+.btn-pdf {
+  display:inline-flex; align-items:center; gap:9px;
+  background:linear-gradient(135deg,var(--cyan),var(--blue));
+  color:white; border:none; padding:13px 26px; border-radius:11px;
+  font-size:13px; font-weight:700; letter-spacing:0.03em;
+  transition:all 0.3s; box-shadow:0 8px 24px rgba(6,182,212,0.28);
+}
+.btn-pdf:hover { transform:translateY(-2px); box-shadow:0 12px 32px rgba(6,182,212,0.4); }
+.btn-pdf svg { width:16px; height:16px; }
+.contact-qr { display:flex; flex-direction:column; align-items:center; gap:12px; }
+.qr-frame { background:white; padding:12px; border-radius:14px; box-shadow:0 16px 40px rgba(0,0,0,0.3); }
+.qr-frame img { width:140px; height:140px; object-fit:cover; }
+.qr-label { font-size:11px; color:var(--gray); text-align:center; line-height:1.5; }
+
+/* ════════════════════════════════════════════
+   RESPONSIVE — TABLET  ≤1024px
+════════════════════════════════════════════ */
+@media (max-width:1024px) {
+  .hero-wrap { grid-template-columns:1fr 260px; gap:40px; padding:0 32px; }
+  .hero-text h1 { font-size:clamp(28px,4vw,46px); }
+  .proj-page  { grid-template-columns:52% 48%; }
+  .proj-info  { padding:44px 36px; }
+  .proj-num   { font-size:56px; }
+  .contact-wrap { gap:40px; padding:0 32px; }
+}
+
+/* ════════════════════════════════════════════
+   RESPONSIVE — MOBILE  ≤768px
+════════════════════════════════════════════ */
+@media (max-width:768px) {
+
+  /* ── Global ── */
+  body { overflow:hidden; }
+
+  /* ── Top bar ── */
+  .top-bar { padding:14px 20px; }
+  .logo { font-size:11px; }
+  .btn-print { padding:7px 14px; font-size:10px; }
+
+  /* ── Side dots → bottom-right ── */
+  .side-nav {
+    right:16px; top:auto; bottom:60px;
+    transform:none;
+    flex-direction:column; gap:8px;
+  }
+  .dot { width:5px; height:5px; }
+
+  /* ── Arrow & label ── */
+  .arrow-down { bottom:18px; }
+  .arrow-down span { display:none; }
+  .section-label { display:none; }
+
+  /* ── S0 HERO ── */
+  #s0 { align-items:flex-end; padding-bottom:60px; }
+  .hero-wrap {
+    grid-template-columns:1fr;
+    gap:0; padding:70px 24px 0;
+    align-items:flex-start;
+  }
+  .hero-card { display:none; }
+  .hero-subtitle { font-size:10px; margin-bottom:10px; }
+  .hero-text h1 { font-size:clamp(28px,8vw,40px); margin-bottom:12px; }
+  .hero-tagline { font-size:13px; margin-bottom:20px; max-width:100%; }
+  .hero-contacts { gap:6px; margin-bottom:20px; }
+  .contact-item { font-size:11px; }
+  .hero-tags { gap:6px; }
+  .tag { font-size:10px; padding:4px 10px; }
+
+  /* ── PROJECT PAGES ── */
+  .proj-page {
+    grid-template-columns:1fr;
+    grid-template-rows:42vh 1fr;
+  }
+  .proj-visual { height:42vh; }
+  .proj-thumbs { padding:8px 12px; gap:6px; }
+  .proj-thumb-btn { width:60px; height:40px; }
+
+  .proj-info {
+    padding:20px 22px 70px;
+    overflow-y:auto;
+    justify-content:flex-start;
+  }
+  .proj-num  { font-size:44px; margin-bottom:-4px; }
+  .proj-cat  { font-size:9px; margin-bottom:6px; }
+  .proj-info h2 { font-size:18px; margin-bottom:4px; }
+  .proj-info .proj-year { font-size:10px; margin-bottom:14px; }
+  .proj-desc {
+    max-height:none;
+    overflow:visible;
+    margin-bottom:14px;
+  }
+  .proj-desc p { font-size:12px; line-height:1.8; margin-bottom:10px; }
+  .proj-tech-row { gap:5px; margin-bottom:14px; }
+  .proj-pill { font-size:9px; padding:3px 9px; }
+  .proj-qr-row { padding:12px; gap:12px; }
+  .qr-box { width:56px; height:56px; }
+  .qr-text h5 { font-size:11px; }
+  .qr-text p  { font-size:10px; }
+
+  /* ── S7 CONTACT ── */
+  #s6 { align-items:flex-start; padding-top:70px; }
+  .contact-wrap {
+    grid-template-columns:1fr;
+    gap:0; padding:0 24px;
+    overflow-y:auto; height:100%;
+    padding-bottom:70px;
+    align-items:flex-start;
+  }
+  .contact-qr { display:none; }
+  .contact-left h2  { font-size:28px; margin-bottom:10px; }
+  .contact-left > p { font-size:13px; margin-bottom:20px; }
+  .contact-links { gap:8px; margin-bottom:20px; }
+  .contact-link { padding:11px 14px; border-radius:10px; }
+  .cl-value { font-size:12px; }
+  .btn-pdf { width:100%; justify-content:center; font-size:13px; padding:13px; }
+}
+
+/* ════════════════════════════════════════════
+   RESPONSIVE — SMALL MOBILE  ≤430px
+════════════════════════════════════════════ */
+@media (max-width:430px) {
+  .hero-text h1 { font-size:clamp(24px,7.5vw,34px); }
+  .proj-page { grid-template-rows:38vh 1fr; }
+  .proj-visual { height:38vh; }
+  .proj-info { padding:16px 18px 70px; }
+  .proj-info h2 { font-size:16px; }
+  .proj-desc p { font-size:11.5px; }
+  .contact-left h2 { font-size:24px; }
+}
+
+/* ─── PRINT STYLES ────────────────────────── */
+@media print {
+  body { overflow:visible; height:auto; background:white; color:#0f172a; }
+  #app { height:auto; }
+  .section {
+    position:relative !important; opacity:1 !important; visibility:visible !important;
+    height:auto !important; min-height:100vh; page-break-after:always; overflow:visible !important;
+  }
+  .section:last-child { page-break-after:avoid; }
+  .top-bar,.side-nav,.arrow-down,.section-label,#cover,#canvas-bg { display:none !important; }
+  .proj-page { grid-template-columns:1fr 1fr; height:100vh; }
+  .proj-desc { max-height:none; overflow:visible; }
+  #s0 { background:#08101f !important; }
+  #s3 .proj-page { background:#0f060c !important; }
+  #s4 .proj-page { background:#110e04 !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- COVER OVERLAY -->
+<div id="cover"><div id="cover-panel"></div></div>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="logo">Khanh Nguyen</div>
+  <button class="btn-print" onclick="window.print()">
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+    </svg>
+    PDF保存
+  </button>
+</div>
+
+<!-- SIDE DOTS -->
+<nav class="side-nav" id="sideNav"></nav>
+
+<!-- ARROW -->
+<button class="arrow-down" id="arrowDown" onclick="navigate(1)">
+  <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+  </svg>
+  <span>Scroll</span>
+</button>
+
+<!-- SECTION LABEL -->
+<div class="section-label" id="sectionLabel"></div>
+
+<!-- ════════════ SECTIONS ════════════ -->
+<div id="app">
+
+<!-- ── S0: HERO ── -->
+<section class="section active" id="s0" data-color="#08101f" data-label="Home">
+  <canvas id="canvas-bg"></canvas>
+  <div class="hero-wrap">
+    <div class="hero-text">
+      <p class="hero-subtitle">Web Developer &amp; IT Engineer</p>
+      <h1>NGUYEN VAN<br><span>TUAN KHANH</span></h1>
+      <p class="hero-tagline">ベトナム出身のIT専門学校生。<br>Webアプリ開発・AIツール活用・就職活動支援ツールを制作しています。</p>
+      <div class="hero-contacts">
+        <a class="contact-item" href="mailto:9.7nguyenvantuan.khanh@gmail.com">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          9.7nguyenvantuan.khanh@gmail.com
+        </a>
+        <a class="contact-item" href="https://github.com/KhanhNguyenAI" target="_blank">
+          <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          github.com/KhanhNguyenAI
+        </a>
+        <a class="contact-item" href="https://khanhnguyenai.github.io/portfolio/" target="_blank">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9"/></svg>
+          khanhnguyenai.github.io/portfolio
+        </a>
+      </div>
+      <div class="hero-tags">
+        <span class="tag">HTML / CSS</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">Node.js</span>
+        <span class="tag">Firebase</span>
+        <span class="tag">Gemini AI</span>
+        <span class="tag">Socket.IO</span>
+      </div>
+    </div>
+    <div class="hero-card">
+      <img src="portfolio/img/profile.png" alt="CV Preview">
+    </div>
+  </div>
+</section>
+
+<!-- ── S1: PROJECT — WEB PORTFOLIO ── -->
+<section class="section" id="s1" data-color="#08111f" data-label="Portfolio">
+  <div class="proj-page">
+    <!-- Visual -->
+    <div class="proj-visual">
+      <div class="proj-main-img" id="p1-main">
+        <img src="portfolio/img/story.png" alt="Portfolio" id="p1-mainimg">
+        <div class="proj-main-overlay"></div>
+      </div>
+      <div class="proj-thumbs">
+        <button class="proj-thumb-btn active" onclick="switchImg('p1',0)" data-src="portfolio/img/story.png">
+          <img src="portfolio/img/story.png" alt="">
+        </button>
+        <button class="proj-thumb-btn" onclick="switchImg('p1',1)" data-src="portfolio/img/careervision.png">
+          <img src="portfolio/img/careervision.png" alt="">
+        </button>
+        <button class="proj-thumb-btn" onclick="switchImg('p1',2)" data-src="portfolio/img/profile.png">
+          <img src="portfolio/img/profile.png" alt="">
+        </button>
+      </div>
+    </div>
+    <!-- Info -->
+    <div class="proj-info">
+      <div class="proj-num">01</div>
+      <div class="proj-cat">Web Portfolio</div>
+      <h2>Webポートフォリオ</h2>
+      <div class="proj-year">2025 — Personal Project</div>
+      <div class="proj-desc">
+        <p>このWebポートフォリオは、就職活動の中で<strong>「自分自身をより深く知ってもらいたい」</strong>という思いから制作しました。単なる自己紹介ではなく、モダンなWebデザインやアニメーションを通じて、第一印象から興味を持っていただけるよう意識しました。</p>
+        <p>また、このポートフォリオでは、留学生活の経験や印象に残っている出来事、そして将来のキャリアビジョンについても、自分の言葉で表現しています。技術だけではなく、「どのような考えを持ち、どのような成長をしてきたのか」を伝えることを大切にしました。</p>
+        <p>開発の中で特に難しかったのは、最初にPC画面を基準として設計を進めてしまったことです。その影響で、スマートフォン向けUIの設計が非常に難しくなり、レイアウトや操作性の調整に苦労しました。</p>
+        <p>そこで、スマートフォン専用のUIを別で設計し、利用しているデバイスを判定して最適なUIを表示する仕組みを取り入れました。その結果、PCとスマートフォンの両方で、より使いやすいデザインを実現することができました。</p>
+        <p>この制作を通じて、単にWebサイトを作るだけではなく、<strong>「誰がどの環境で使うのか」</strong>を考えながら設計する重要性を学びました。</p>
+      </div>
+      <div class="proj-tech-row">
+        <span class="proj-pill">HTML / CSS</span>
+        <span class="proj-pill">JavaScript</span>
+        <span class="proj-pill">Responsive Design</span>
+        <span class="proj-pill">CSS Animation</span>
+      </div>
+      <div class="proj-qr-row">
+        <div class="qr-box"><img src="portfolio/img/qr.jpg" alt="QR Code"></div>
+        <div class="qr-text">
+          <h5>QRコードで確認</h5>
+          <p>スマートフォンでスキャンすると<br>このポートフォリオをご覧いただけます</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── S2: PROJECT — IT COACH ── -->
+<section class="section" id="s2" data-color="#091218" data-label="IT Coach">
+  <div class="proj-page">
+    <div class="proj-visual">
+      <div class="proj-main-img" id="p2-main">
+        <img src="ITsupport/img/homepage.png" alt="IT Coach" id="p2-mainimg">
+        <div class="proj-main-overlay"></div>
+      </div>
+      <div class="proj-thumbs">
+        <button class="proj-thumb-btn active" onclick="switchImg('p2',0)" data-src="ITsupport/img/homepage.png"><img src="ITsupport/img/homepage.png" alt=""></button>
+        <button class="proj-thumb-btn" onclick="switchImg('p2',1)" data-src="ITsupport/img/study.png"><img src="ITsupport/img/study.png" alt=""></button>
+        <button class="proj-thumb-btn" onclick="switchImg('p2',2)" data-src="ITsupport/img/career.png"><img src="ITsupport/img/career.png" alt=""></button>
+        <button class="proj-thumb-btn" onclick="switchImg('p2',3)" data-src="ITsupport/img/AIsetting.png"><img src="ITsupport/img/AIsetting.png" alt=""></button>
+      </div>
+    </div>
+    <div class="proj-info">
+      <div class="proj-num">02</div>
+      <div class="proj-cat">AI Application</div>
+      <h2>IT学習コーチ</h2>
+      <div class="proj-year">2025 — Personal Project</div>
+      <div class="proj-desc">
+        <p>このアプリを開発した目的は、<strong>IT資格の学習支援と、新卒学生の就職活動をサポートするため</strong>です。私自身、学習・情報整理・就職活動を同時に進める中で、多くの不便さや課題を感じていました。そこで、「自分が本当に必要だと思うものを作りたい」という考えから、このアプリの開発を始めました。</p>
+        <p>開発の中で特に難しかったのは、AIモデルが同時に大量のリクエストを処理できないという点でした。利用者が増えるほど待機時間が長くなり、スムーズに利用できなくなる課題がありました。</p>
+        <p>そのため、一つの解決策として、可能であれば<strong>利用者自身のAPIキーを使用できる仕組み</strong>を考えました。これにより、待機時間を減らし、より快適にAI機能を利用できるよう工夫しました。</p>
+        <p>この経験を通じて、「アプリやWebサービスは、単に技術だけで作られるものではない」ということを強く実感しました。しかし本当に重要なのは、<strong>「どのような課題を解決するために作るのか」「誰のために作るのか」「どのような価値を提供できるのか」</strong>だと考えております。</p>
+        <p>私自身も、実際のニーズや課題を意識しながら、社会に価値を提供できるものづくりをしていきたいと考えております。</p>
+      </div>
+      <div class="proj-tech-row">
+        <span class="proj-pill">Firebase</span>
+        <span class="proj-pill">Gemini AI</span>
+        <span class="proj-pill">JavaScript</span>
+        <span class="proj-pill">CSS</span>
+        <span class="proj-pill">ユーザーAPIキー対応</span>
+      </div>
+      <div class="proj-qr-row">
+        <div class="qr-box"><img src="ITsupport/img/qr.jpg" alt="QR Code"></div>
+        <div class="qr-text">
+          <h5>QRコードで確認</h5>
+          <p>スキャンするとIT学習コーチの<br>詳細をご覧いただけます</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── S3: PROJECT — PARA POWERLIFTING ── -->
+<section class="section" id="s3" data-color="#0f060c" data-label="Para">
+  <div class="proj-page">
+    <div class="proj-visual">
+      <div class="proj-main-img" id="p3-main">
+        <img src="para/img/home.png" alt="Para Powerlifting" id="p3-mainimg">
+        <div class="proj-main-overlay"></div>
+      </div>
+      <div class="proj-thumbs">
+        <button class="proj-thumb-btn active" onclick="switchImg('p3',0)" data-src="para/img/home.png"><img src="para/img/home.png" alt=""></button>
+        <button class="proj-thumb-btn" onclick="switchImg('p3',1)" data-src="para/img/credit.png"><img src="para/img/credit.png" alt=""></button>
+      </div>
+    </div>
+    <div class="proj-info">
+      <div class="proj-num">03</div>
+      <div class="proj-cat">保守開発 / Web Maintenance</div>
+      <h2>パラパワーリフティング2026</h2>
+      <div class="proj-year">2025 — School Project / 実客案件</div>
+      <div class="proj-desc">
+        <p>「パラパワーリフティング2026」のプロジェクトでは、<strong>保守開発に携わる機会をいただきました</strong>。私にとって、多くの利用者がいる既存システムの保守を経験するのは初めてであり、とても貴重な経験になりました。</p>
+        <p>開発の中では、先生やお客様からの要望に沿って対応する必要があり、まず既存コードを理解することから始めました。自分でゼロから自由に作る開発とは異なり、以前の開発者が作成したコードの構成や意図を読み取りながら修正を進める必要がありました。</p>
+        <p>最初は、処理の流れや影響範囲を理解するまでに時間がかかりましたが、一つずつ確認しながら対応を進めることで、徐々に理解を深めることができました。</p>
+        <p>この経験を通じて、保守開発では単に機能を追加するだけではなく、<strong>「利用者に影響を与えないこと」や「相手の要望を正確に理解すること」</strong>が非常に重要だと学びました。</p>
+        <p>また、これまでのように自分の考えだけで開発を進めるのではなく、相手のニーズに合わせて改善を行うという視点を得ることができました。結果として、Web保守の実践経験だけでなく、<strong>既存システムを理解する力や、相手の要望に応える姿勢</strong>についても学ぶことができたと感じています。</p>
+      </div>
+      <div class="proj-tech-row">
+        <span class="proj-pill">HTML / CSS</span>
+        <span class="proj-pill">JavaScript</span>
+        <span class="proj-pill">PHP</span>
+        <span class="proj-pill">保守開発</span>
+        <span class="proj-pill">既存コード読解</span>
+      </div>
+      <div class="proj-qr-row">
+        <div class="qr-box"><img src="para/img/qr.jpg" alt="QR Code"></div>
+        <div class="qr-text">
+          <h5>QRコードで確認</h5>
+          <p>スキャンするとパラパワーリフティング<br>サイトをご覧いただけます</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── S4: PROJECT — EC SITE ── -->
+<section class="section" id="s4" data-color="#110e04" data-label="EC Site">
+  <div class="proj-page">
+    <div class="proj-visual">
+      <div class="proj-main-img" id="p4-main">
+        <img src="ec/img/home.png" alt="OldShop EC" id="p4-mainimg">
+        <div class="proj-main-overlay"></div>
+      </div>
+      <div class="proj-thumbs">
+        <button class="proj-thumb-btn active" onclick="switchImg('p4',0)" data-src="ec/img/home.png"><img src="ec/img/home.png" alt=""></button>
+      </div>
+    </div>
+    <div class="proj-info">
+      <div class="proj-num">04</div>
+      <div class="proj-cat">EC Site / チーム開発</div>
+      <h2>OldShop — 中古品マーケット</h2>
+      <div class="proj-year">2024 — Team Project / 卒業制作参加</div>
+      <div class="proj-desc">
+        <p>「OldShop – Used Product Marketplace」は、私にとって学習期間の中で<strong>初めて本格的に取り組んだECサイト開発プロジェクト</strong>です。現在の日本向けデモ版は、自分自身で調整・改善を行ったバージョンになります。</p>
+        <p>このプロジェクトに取り組んだきっかけは、高校時代の友人からの誘いでした。その友人は現在、大学を卒業しソフトウェアエンジニアとして働いており、卒業制作プロジェクトへの参加を勧めてもらいました。そして私自身も、「自分だけのECサイトを作ってみたい」という思いがあり、開発に挑戦しました。</p>
+        <p>しかし当時の私は、実務レベルの開発経験がほとんどありませんでした。チームメンバーの多くが既に経験を持っていたため、「自分はついていけるのだろうか」という不安もありました。ですが同時に、<strong>経験豊富なメンバーから直接学べる環境</strong>は、私にとって非常に貴重でした。</p>
+        <p>開発では、データベース設計、商品管理、カート機能、決済処理など、ECサイトに必要な基本機能について学びました。私自身の貢献は決して大きかったとは言えませんが、その分、多くの知識や考え方を吸収することができました。</p>
+        <p>私にとって、このプロジェクトを最後まで完成させられたこと自体が大きな成功です。この経験は、現在の<strong>「システム開発の道へ進みたい」という思いにつながる大切なきっかけ</strong>になっています。</p>
+      </div>
+      <div class="proj-tech-row">
+        <span class="proj-pill">HTML / CSS</span>
+        <span class="proj-pill">JavaScript</span>
+        <span class="proj-pill">PHP</span>
+        <span class="proj-pill">MySQL</span>
+        <span class="proj-pill">EC機能設計</span>
+      </div>
+      <div class="proj-qr-row">
+        <div class="qr-box"><img src="ec/img/qr.jpg" alt="QR Code"></div>
+        <div class="qr-text">
+          <h5>動画デモを確認</h5>
+          <p>QRコードをスキャンするか<br>YouTubeでデモをご覧いただけます</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── S5: PROJECT — BRIONA / BOOK ── -->
+<section class="section" id="s5" data-color="#0d0a20" data-label="Briona">
+  <div class="proj-page">
+    <div class="proj-visual">
+      <div class="proj-main-img" id="p5-main">
+        <img src="book/img/homepage.png" alt="Briona" id="p5-mainimg">
+        <div class="proj-main-overlay"></div>
+      </div>
+      <div class="proj-thumbs">
+        <button class="proj-thumb-btn active" onclick="switchImg('p5',0)" data-src="book/img/homepage.png"><img src="book/img/homepage.png" alt=""></button>
+        <button class="proj-thumb-btn" onclick="switchImg('p5',1)" data-src="book/img/chatbot.png"><img src="book/img/chatbot.png" alt=""></button>
+        <button class="proj-thumb-btn" onclick="switchImg('p5',2)" data-src="book/img/realchat.png"><img src="book/img/realchat.png" alt=""></button>
+      </div>
+    </div>
+    <div class="proj-info">
+      <div class="proj-num">05</div>
+      <div class="proj-cat">HTML Award 2025 応募作品</div>
+      <h2>Briona — 読書コミュニティアプリ</h2>
+      <div class="proj-year">2025 — Team Project / コンテスト応募</div>
+      <div class="proj-desc">
+        <p>「Book」というアプリは、<strong>「一緒に読書をしながら会話を楽しめる空間を作りたい」</strong>という思いから開発しました。このプロジェクトは、学外コンテストであるHTML Award 2025への参加を目的として制作したものです。</p>
+        <p>開発の中で最も難しかったのは、ユーザー同士のリアルタイムチャット機能でした。リアルタイム通信では、クライアントとサーバーが継続的に接続された状態を維持する必要があり、通常のWeb開発とは異なる難しさを感じました。</p>
+        <p>その課題を解決するために、Socket.IOというライブラリを使用しました。また、インターネット上の開発者の情報を調べたり、専門学校の先生からアドバイスをいただいたりしながら、少しずつ実装を進めました。</p>
+        <p>一方で、悔しかった点もあります。プロダクトを自分が理想としていた完成度までデプロイできなかったこと、そしてコンテストで結果を残せなかったことです。しかし、この経験以上に得られたものは非常に大きかったと感じています。</p>
+        <p>この開発を通じて、Webサイトの設計から開発、運用までの流れを実践的に学ぶことができました。また、データベース設計や管理、API連携、さらに<strong>プロンプト設計を中心としたAIチャットボット開発</strong>も経験しました。</p>
+        <p>結果としてコンテストでは受賞できませんでしたが、「失敗した」というより、<strong>「挑戦を通じて大きく成長できた」</strong>と感じています。</p>
+      </div>
+      <div class="proj-tech-row">
+        <span class="proj-pill">Node.js</span>
+        <span class="proj-pill">Socket.IO</span>
+        <span class="proj-pill">Gemini AI</span>
+        <span class="proj-pill">MySQL</span>
+        <span class="proj-pill">Prompt設計</span>
+      </div>
+      <div class="proj-qr-row">
+        <div class="qr-box"><img src="book/img/qr.png" alt="QR Code"></div>
+        <div class="qr-text">
+          <h5>QRコードで確認</h5>
+          <p>スキャンするとBrianaの詳細・<br>デモをご覧いただけます</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── S6: CONTACT / PRINT ── -->
+<section class="section" id="s6" data-color="#08101f" data-label="Contact">
+  <div class="contact-wrap">
+    <div class="contact-left">
+      <p class="eyebrow">Contact &amp; Download</p>
+      <h2>一緒に<br><em>成長</em>しましょう</h2>
+      <p>新しいことに挑戦し続ける姿勢と、実際のニーズから生まれたものづくりへの情熱を持って、貴社の成長に貢献したいと考えています。</p>
+      <div class="contact-links">
+        <a class="contact-link" href="mailto:9.7nguyenvantuan.khanh@gmail.com">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          <div><div class="cl-label">Email</div><div class="cl-value">9.7nguyenvantuan.khanh@gmail.com</div></div>
+        </a>
+        <a class="contact-link" href="https://github.com/KhanhNguyenAI" target="_blank">
+          <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          <div><div class="cl-label">GitHub</div><div class="cl-value">github.com/KhanhNguyenAI</div></div>
+        </a>
+        <a class="contact-link" href="https://khanhnguyenai.github.io/portfolio/" target="_blank">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9"/></svg>
+          <div><div class="cl-label">Portfolio Web</div><div class="cl-value">khanhnguyenai.github.io/portfolio</div></div>
+        </a>
+      </div>
+      <button class="btn-pdf" onclick="window.print()">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        このポートフォリオをPDFで保存
+      </button>
+    </div>
+    <div class="contact-qr">
+      <div class="qr-frame">
+        <img src="portfolio/img/qr.jpg" alt="Portfolio QR Code">
+      </div>
+      <p class="qr-label">QRコードでポートフォリオを<br>スマートフォンで閲覧</p>
+    </div>
+  </div>
+</section>
+
+</div><!-- /#app -->
+
+<script>
+(function(){
+  const sectionEls = [...document.querySelectorAll('.section')];
+  const labels     = sectionEls.map(s => s.dataset.label || '');
+  const bgColors   = sectionEls.map(s => s.dataset.color || '#08101f');
+  const TOTAL      = sectionEls.length;
+  let current      = 0;
+  let isTransitioning = false;
+
+  // ── dots
+  const sideNav = document.getElementById('sideNav');
+  const dots = [];
+  labels.forEach((lbl, i) => {
+    const d = document.createElement('button');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.title = lbl;
+    d.addEventListener('click', () => goTo(i));
+    sideNav.appendChild(d);
+    dots.push(d);
+  });
+
+  function updateDots(idx){ dots.forEach((d,i) => d.classList.toggle('active', i === idx)); }
+
+  const labelEl  = document.getElementById('sectionLabel');
+  const arrowEl  = document.getElementById('arrowDown');
+  function updateUI(idx){
+    labelEl.textContent = `${String(idx+1).padStart(2,'0')} / ${String(TOTAL).padStart(2,'0')}  ${labels[idx]}`;
+    arrowEl.classList.toggle('hidden', idx === TOTAL - 1);
+    updateDots(idx);
+  }
+
+  // ── cover transition
+  const cover = document.getElementById('cover');
+  const panel = document.getElementById('cover-panel');
+
+  function goTo(nextIdx){
+    if(isTransitioning || nextIdx < 0 || nextIdx >= TOTAL || nextIdx === current) return;
+    isTransitioning = true;
+    panel.style.background = bgColors[nextIdx];
+    cover.classList.add('phase-in');
+    setTimeout(() => {
+      sectionEls[current].classList.remove('active');
+      sectionEls[nextIdx].classList.add('active');
+      current = nextIdx;
+      updateUI(current);
+      // Snap cover away instantly — no exit animation
+      panel.style.transition = 'none';
+      cover.classList.remove('phase-in');
+      void panel.offsetHeight; // force reflow
+      panel.style.transition = '';
+      isTransitioning = false;
+    }, 720);
+  }
+
+  window.navigate = d => goTo(current + d);
+
+  // wheel — chỉ dùng isTransitioning, thêm threshold để tránh scroll nhẹ
+  let lastWheelDir = 0;
+  document.addEventListener('wheel', e => {
+    if(isTransitioning) return;
+    const dir = e.deltaY > 0 ? 1 : -1;
+    if(Math.abs(e.deltaY) < 30) return; // bỏ qua scroll quá nhẹ
+    goTo(current + dir);
+  }, { passive:true });
+
+  // keyboard
+  document.addEventListener('keydown', e => {
+    if(e.key==='ArrowDown'||e.key==='PageDown') goTo(current+1);
+    if(e.key==='ArrowUp'  ||e.key==='PageUp')   goTo(current-1);
+  });
+
+  // touch
+  let touchY = 0;
+  document.addEventListener('touchstart', e => { touchY = e.touches[0].clientY; }, {passive:true});
+  document.addEventListener('touchend', e => {
+    const dy = touchY - e.changedTouches[0].clientY;
+    if(Math.abs(dy) > 40) goTo(current + (dy > 0 ? 1 : -1));
+  });
+
+  updateUI(0);
+
+  // ── particle canvas
+  const canvas = document.getElementById('canvas-bg');
+  const ctx = canvas.getContext('2d');
+  let W, H;
+  function resize(){ W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  const pts = Array.from({length:75}, () => ({
+    x: Math.random()*window.innerWidth,
+    y: Math.random()*window.innerHeight,
+    r: Math.random()*1.4+0.3,
+    vx:(Math.random()-0.5)*0.28,
+    vy:(Math.random()-0.5)*0.28,
+    a: Math.random()*0.45+0.1,
+  }));
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(p => {
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(79,139,255,${p.a})`; ctx.fill();
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0)p.x=W; if(p.x>W)p.x=0;
+      if(p.y<0)p.y=H; if(p.y>H)p.y=0;
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ── image switcher for project galleries
+function switchImg(proj, idx){
+  const mainImg = document.getElementById(proj + '-mainimg');
+  const thumbs  = document.querySelectorAll(`#${proj}-main`).length
+    ? document.querySelector(`#${proj}-main`).closest('.proj-page').querySelectorAll('.proj-thumb-btn')
+    : [];
+  // find the button
+  const allThumbs = document.querySelectorAll(`button[onclick*="switchImg('${proj}'"]`);
+  const btn = allThumbs[idx];
+  if(!btn) return;
+  mainImg.src = btn.dataset.src;
+  allThumbs.forEach((b,i) => b.classList.toggle('active', i === idx));
+}
+</script>
+</body>
+</html>
