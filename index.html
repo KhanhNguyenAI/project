@@ -154,7 +154,7 @@ button { font-family:inherit; cursor:pointer; }
 /* ════════════════════════════════════════════
    S1 — MY STORY
 ════════════════════════════════════════════ */
-#s1 { background:#f8fafc; color:#0f172a; }
+#s1 { background:#f8fafc; color:#f3f4f6; }
 .story-wrap { display:grid; grid-template-columns:1fr 1fr; height:100%; }
 .story-img { position:relative; overflow:hidden; }
 .story-img img { width:100%; height:100%; object-fit:cover; }
@@ -238,7 +238,7 @@ button { font-family:inherit; cursor:pointer; }
 }
 .proj-num {
   font-size:72px; font-weight:900; letter-spacing:-0.04em;
-  color:rgba(255,255,255,0.04); line-height:1;
+  color:rgb(250, 250, 250); line-height:1;
   margin-bottom:-8px; user-select:none;
 }
 .proj-cat {
@@ -261,7 +261,7 @@ button { font-family:inherit; cursor:pointer; }
 .proj-desc::-webkit-scrollbar { width:3px; }
 .proj-desc::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.12); border-radius:2px; }
 .proj-desc p {
-  font-size:13px; line-height:1.9; color:rgba(255,255,255,0.62);
+  font-size:12px; line-height:1.9; color:rgba(255,255,255,0.62);
   font-family:'Noto Sans JP',sans-serif; margin-bottom:12px;
 }
 .proj-desc p:last-child { margin-bottom:0; }
@@ -589,19 +589,45 @@ button { font-family:inherit; cursor:pointer; }
 
 /* ─── PRINT STYLES ────────────────────────── */
 @media print {
-  body { overflow:visible; height:auto; background:white; color:#0f172a; }
+  /* ── Ép browser in đúng màu nền + chữ, không tự ý bỏ background ── */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  body { overflow:visible; height:auto; }
   #app { height:auto; }
+
   .section {
     position:relative !important; opacity:1 !important; visibility:visible !important;
     height:auto !important; min-height:100vh; page-break-after:always; overflow:visible !important;
   }
   .section:last-child { page-break-after:avoid; }
   .top-bar,.side-nav,.arrow-down,.section-label,#cover,#canvas-bg { display:none !important; }
+
+  /* Project pages */
   .proj-page { grid-template-columns:1fr 1fr; height:100vh; }
   .proj-desc { max-height:none; overflow:visible; }
+
+  /* Giữ đúng màu nền từng section */
   #s0 { background:#08101f !important; }
+  #s1 .proj-page { background:#08111f !important; }
+  #s2 .proj-page { background:#091218 !important; }
   #s3 .proj-page { background:#0f060c !important; }
   #s4 .proj-page { background:#110e04 !important; }
+  #s5 .proj-page { background:#0d0a20 !important; }
+  #s6 .proj-page { background:#080f08 !important; }
+  #s7 { background:#08101f !important; }
+
+  /* Đảm bảo chữ trắng không bị mất */
+  .hero-text h1, .hero-text h1 span,
+  .hero-tagline, .hero-subtitle,
+  .contact-item, .tag,
+  .proj-info h2, .proj-num, .proj-cat, .proj-year,
+  .proj-desc p, .proj-desc strong,
+  .proj-pill, .qr-text h5, .qr-text p,
+  .contact-left h2, .contact-left p,
+  .cl-label, .cl-value { color:inherit !important; }
 }
 </style>
 </head>
