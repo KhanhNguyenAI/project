@@ -322,6 +322,10 @@ button { font-family:inherit; cursor:pointer; }
 #s5 .proj-cat  { color:#a78bfa; }
 #s5 .proj-pill { background:rgba(167,139,250,0.1); border:1px solid rgba(167,139,250,0.25); color:#c4b5fd; }
 
+#s6 .proj-page { background:#080f08; }
+#s6 .proj-cat  { color:#4ade80; }
+#s6 .proj-pill { background:rgba(74,222,128,0.1); border:1px solid rgba(74,222,128,0.3); color:#86efac; }
+
 /* ════════════════════════════════════════════
    S5 — CAREER VISION
 ════════════════════════════════════════════ */
@@ -371,9 +375,9 @@ button { font-family:inherit; cursor:pointer; }
 }
 
 /* ════════════════════════════════════════════
-   S6 — SKILLS
+   S6 — STAND CENTER SYSTEM
 ════════════════════════════════════════════ */
-#s6 { background:#f8fafc; color:#0f172a; display:flex; align-items:center; justify-content:center; }
+#s6 { background:#080f08; }
 .skills-wrap { max-width:960px; width:100%; padding:0 40px; }
 .section-header { text-align:center; margin-bottom:36px; }
 .section-header .eyebrow {
@@ -424,7 +428,7 @@ button { font-family:inherit; cursor:pointer; }
 /* ════════════════════════════════════════════
    S7 — CONTACT / PRINT
 ════════════════════════════════════════════ */
-#s6 { background:var(--navy); display:flex; align-items:center; justify-content:center; }
+#s7 { background:var(--navy); display:flex; align-items:center; justify-content:center; }
 .contact-wrap {
   max-width:880px; width:100%; padding:0 40px;
   display:grid; grid-template-columns:1fr 240px; gap:60px; align-items:center;
@@ -553,7 +557,7 @@ button { font-family:inherit; cursor:pointer; }
   .qr-text p  { font-size:10px; }
 
   /* ── S7 CONTACT ── */
-  #s6 { align-items:flex-start; padding-top:70px; }
+  #s7 { align-items:flex-start; padding-top:70px; }
   .contact-wrap {
     grid-template-columns:1fr;
     gap:0; padding:0 24px;
@@ -897,8 +901,52 @@ button { font-family:inherit; cursor:pointer; }
   </div>
 </section>
 
-<!-- ── S6: CONTACT / PRINT ── -->
-<section class="section" id="s6" data-color="#08101f" data-label="Contact">
+<!-- ── S6: PROJECT — STAND CENTER SYSTEM ── -->
+<section class="section" id="s6" data-color="#080f08" data-label="Stand Lock">
+  <div class="proj-page">
+    <div class="proj-visual">
+      <div class="proj-main-img" id="p6-main">
+        <img src="stand_center_system/img/bang_tuyen_duong.jpg" alt="表彰状" id="p6-mainimg">
+        <div class="proj-main-overlay"></div>
+      </div>
+      <div class="proj-thumbs">
+        <button class="proj-thumb-btn active" onclick="switchImg('p6',0)" data-src="stand_center_system/img/bang_tuyen_duong.jpg">
+          <img src="stand_center_system/img/bang_tuyen_duong.jpg" alt="">
+        </button>
+      </div>
+    </div>
+    <div class="proj-info">
+      <div class="proj-num">06</div>
+      <div class="proj-cat">アイデア・デザインコンテスト 🏆 入選</div>
+      <h2>スマートスタンドロックシステム</h2>
+      <div class="proj-year">2026 — 岡山モノづくり★学生アイデア・デザインコンテスト</div>
+      <div class="proj-desc">
+        <p>岡山モノづくり★学生アイデア・デザインコンテストに参加し、<strong>バイク用のスマートスタンドロックシステムのデザインを提案しました。</strong>教師からの勧めをきっかけに参加し、「防犯性」と「利便性」を両立できるアイデアを目指しました。</p>
+        <p>一般的なロック機構では面白さが足りないと感じたため、バイクの各部品を調査しました。その中で「センタースタンド（中央スタンド）」に注目し、スタンドとロック機能を組み合わせることで、<strong>自動的にロックできる利便性・見た目を損なわないデザイン性・盗難防止</strong>を実現するアイデアを考案しました。</p>
+        <p>最も難しかったのはアイデア発想です。単純な機能追加ではなく、「実用性」と「新しさ」の両方を持たせるために、多くの構造やデザインを調査しました。</p>
+        <p>最終的には<strong>選考通過・入選</strong>という結果を得ることができました。この経験を通して、アイデアを形にする面白さや、実際の利用シーンを考えて設計する重要性を学びました。</p>
+      </div>
+      <div class="proj-tech-row">
+        <span class="proj-pill">アイデア設計</span>
+        <span class="proj-pill">プロダクトデザイン</span>
+        <span class="proj-pill">防犯システム</span>
+        <span class="proj-pill">🏆 入選</span>
+      </div>
+      <div class="proj-qr-row" style="cursor:default; pointer-events:none; opacity:0.6;">
+        <div class="qr-box" style="background:#1a2a1a; display:flex; align-items:center; justify-content:center;">
+          <span style="font-size:28px;">🏆</span>
+        </div>
+        <div class="qr-text">
+          <h5>令和8年2月19日 授賞</h5>
+          <p>岡山県知事 伊原木 隆太<br>日本工学院八王子専門学校</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── S7: CONTACT / PRINT ── -->
+<section class="section" id="s7" data-color="#08101f" data-label="Contact">
   <div class="contact-wrap">
     <div class="contact-left">
       <p class="eyebrow">Contact &amp; Download</p>
