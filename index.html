@@ -978,12 +978,26 @@ button { font-family:inherit; cursor:pointer; }
 
   window.navigate = d => goTo(current + d);
 
-  // wheel — chỉ dùng isTransitioning, thêm threshold để tránh scroll nhẹ
-  let lastWheelDir = 0;
+  // ── helper: tìm phần tử scrollable trong section hiện tại
+  function getScrollable() {
+    return sectionEls[current].querySelector('.proj-info, .contact-wrap, .story-content');
+  }
+
+  // Trả về true nếu được phép chuyển trang theo hướng dir
+  function canLeave(dir) {
+    const el = getScrollable();
+    if (!el || el.scrollHeight <= el.clientHeight) return true; // không scroll được → cho qua
+    const atTop    = el.scrollTop <= 2;
+    const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 2;
+    return dir > 0 ? atBottom : atTop;
+  }
+
+  // wheel
   document.addEventListener('wheel', e => {
     if(isTransitioning) return;
+    if(Math.abs(e.deltaY) < 30) return;
     const dir = e.deltaY > 0 ? 1 : -1;
-    if(Math.abs(e.deltaY) < 30) return; // bỏ qua scroll quá nhẹ
+    if(!canLeave(dir)) return; // nội dung chưa scroll hết → không chuyển trang
     goTo(current + dir);
   }, { passive:true });
 
@@ -995,10 +1009,23 @@ button { font-family:inherit; cursor:pointer; }
 
   // touch
   let touchY = 0;
-  document.addEventListener('touchstart', e => { touchY = e.touches[0].clientY; }, {passive:true});
+  let touchScrollEl = null;
+  document.addEventListener('touchstart', e => {
+    touchY = e.touches[0].clientY;
+    const el = getScrollable();
+    touchScrollEl = (el && el.scrollHeight > el.clientHeight) ? el : null;
+  }, { passive:true });
   document.addEventListener('touchend', e => {
     const dy = touchY - e.changedTouches[0].clientY;
-    if(Math.abs(dy) > 40) goTo(current + (dy > 0 ? 1 : -1));
+    if(Math.abs(dy) < 40) return;
+    const dir = dy > 0 ? 1 : -1;
+    if(touchScrollEl) {
+      const atTop    = touchScrollEl.scrollTop <= 2;
+      const atBottom = touchScrollEl.scrollTop + touchScrollEl.clientHeight >= touchScrollEl.scrollHeight - 2;
+      if(dir > 0 && !atBottom) return; // còn nội dung bên dưới → không chuyển trang
+      if(dir < 0 && !atTop)    return; // còn nội dung bên trên → không chuyển trang
+    }
+    goTo(current + dir);
   });
 
   updateUI(0);
